@@ -3,7 +3,7 @@ import React from 'react';
 const Button = (props) =>{
 return (
     <React.Fragment>
-    <button>{props.value}</button>
+    <button className={props.styles}>{props.value}</button>
     </React.Fragment>
 
 )
