@@ -24,7 +24,24 @@ class App extends Component {
        <Button value={'7'}/>
        <Button value={'8'}/>
        <Button value={'9'}/>
-       <Button value={'X'}/>
+       <Button styles={'orange'} value={'X'}/>
+       </div>
+       <div>
+       <Button value={'4'}/>
+       <Button value={'5'}/>
+       <Button value={'6'}/>
+       <Button styles={'orange'} value={'-'}/>
+       </div>
+       <div>
+       <Button value={'1'}/>
+       <Button value={'2'}/>
+       <Button value={'3'}/>
+       <Button styles={'orange'} value={'+'}/>
+       </div>
+       <div>
+       <Button value={'0'}/>
+       <Button value={'.'}/>
+       <Button styles={'orange'} value={'='}/>
        </div>
        </div>
       </div>
