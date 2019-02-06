@@ -16,9 +16,15 @@ class App extends Component {
 }
 
 handleNumsPressed = (value) => {
-  let newState = this.state.displayValue
 
-  if(value === '0'){
+  let newState = ''
+
+  if(this.state.displayValue.charAt(0)!== '0'){
+    newState = this.state.displayValue
+    
+  } 
+
+  if(value === '0' && this.state.displayValue === '0'){
     this.setState({displayValue:value})
   }
   else if(this.state.displayValue === '0' || this.state.displayValue !== '0'){
