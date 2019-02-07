@@ -3,6 +3,7 @@ import Display from './components/display'
 import Button from './components/button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './style.css'
+import {calculate, doMath, addition, subtraction, multiplication, division, percentage, invert} from './math';
 
 class App extends Component {
   constructor(props){
@@ -12,6 +13,22 @@ class App extends Component {
     previousValue: null,
     operation: null,
     waitingForNewValue: false
+  }
+}
+
+handleOperationsPressed = (op) => {
+let {displayValue, previousValue, operation} = this.state;
+///parseDisplayvalue, previous value, they are strings that need to be converted into numbers
+
+  if(operation === null) {
+    this.setState ({
+      operation:op
+      
+    })
+    
+  }
+  else {
+    calculate(previousValue, operation, displayValue)
   }
 }
 
