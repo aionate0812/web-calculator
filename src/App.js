@@ -15,11 +15,11 @@ class App extends Component {
     waitingForNewValue: false
   }
 }
-
+//parseInt(this.state.displayValue)
 handleOperationsPressed = (op) => {
 let {displayValue, previousValue, operation} = this.state;
 ///parseDisplayvalue, previous value, they are strings that need to be converted into numbers
-
+console.log(op)
   if(operation === null) {
     this.setState ({
       operation:op
@@ -28,7 +28,21 @@ let {displayValue, previousValue, operation} = this.state;
     
   }
   else {
-    calculate(previousValue, operation, displayValue)
+    if(previousValue === null) {
+      const result = calculate(previousValue, operation, parseInt(displayValue))
+console.log(result)
+    this.setState ({
+      displayValue: result+''
+    })
+    }
+    else {
+      const result = calculate(parseInt(previousValue), operation, parseInt(displayValue))
+
+    this.setState ({
+      displayValue: result+''
+    })
+    }
+   
   }
 }
 
@@ -65,25 +79,25 @@ handleNumsPressed = (value) => {
               <Button styles={'col'} value={'AC'}/>
               <Button styles={'col'}value={'%'}/>
               <Button styles={'col'} value={'+/-'}/>
-              <Button styles={'col orange'} value={'/'}/>
+              <Button handleButtonPressed={this.handleOperationsPressed} styles={'col orange'} value={'/'}/>
             </div>
             <div className='row'>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'7'}/>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'8'}/>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'9'}/>
-              <Button styles={'col orange'} value={'X'}/>
+              <Button handleButtonPressed={this.handleOperationsPressed} styles={'col orange'} value={'X'}/>
             </div>
             <div className='row'>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'4'}/>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'5'}/>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'6'}/>
-              <Button styles={'col orange'} value={'-'}/>
+              <Button handleButtonPressed={this.handleOperationsPressed} styles={'col orange'} value={'-'}/>
             </div>
             <div className='row'>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'1'}/>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'2'}/>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'3'}/>
-              <Button styles={'col orange'} value={'+'}/>
+              <Button handleButtonPressed={this.handleOperationsPressed} styles={'col orange'} value={'+'}/>
             </div>
             <div className='row'>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col-6'} value={'0'}/>

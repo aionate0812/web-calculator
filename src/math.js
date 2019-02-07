@@ -2,6 +2,7 @@ const calculate = (pValue, operation, dValue) => {
     if (pValue === null && operation === null) {
         return dValue
     } else if (pValue === null) {
+        console.log(doMath(dValue,operation,dValue))
         return doMath(dValue, operation, dValue)
     } else {
         return doMath(pValue, operation, dValue)
@@ -13,7 +14,7 @@ const doMath = (a, operation, b) => {
         return addition(a, b);
     } else if (operation === "-") {
         return subtraction(a, b);
-    } else if (operation === "*") {
+    } else if (operation === "X") {
         return multiplication(a, b);
     } else if (operation === "/") {
         return division(a, b);
@@ -56,7 +57,7 @@ const invert = (num) => {
 
 
 
-console.log(calculate(-6, "+-", null))
+console.log(calculate(null, "+", 7))
 
 
 export {
