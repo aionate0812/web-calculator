@@ -17,50 +17,112 @@ class App extends Component {
 }
 //parseInt(this.state.displayValue)
 handleOperationsPressed = (op) => {
-let {displayValue, previousValue, operation} = this.state;
-///parseDisplayvalue, previous value, they are strings that need to be converted into numbers
-console.log(op)
+ 
+  if(this.state.waitingForNewValue){
+    this.setState({
+      operation:op,
+      waitingForNewValue:true,
+    })
+    return
+  }
+
+  let {displayValue, previousValue, operation} = this.state;
   if(operation === null) {
     this.setState ({
-      operation:op
-      
-    })
-    
+      operation:op,
+      previousValue:displayValue,
+      waitingForNewValue:true,
+    })   
   }
   else {
     if(previousValue === null) {
-      const result = calculate(previousValue, operation, parseInt(displayValue))
-console.log(result)
+    const result = calculate(previousValue,
+      operation,
+      displayValue.indexOf('.') > -1 ? parseFloat(displayValue)
+      :parseInt(displayValue))
     this.setState ({
-      displayValue: result+''
+    displayValue: result+'',
+    waitingForNewValue:true,
     })
     }
     else {
-      const result = calculate(parseInt(previousValue), operation, parseInt(displayValue))
-
+    const result = calculate(previousValue.indexOf('.') > -1 ? parseFloat(previousValue)
+    :parseInt(previousValue),
+    operation,
+    displayValue.indexOf('.') > -1 ? parseFloat(displayValue)
+      :parseInt(displayValue))
     this.setState ({
-      displayValue: result+''
+      displayValue: result+'',
+      operation:op,
+      previousValue:result+'',
+      waitingForNewValue:true,
     })
     }
    
   }
 }
 
+handleClearButton = (value) => {
+  if(value === 'C') {
+    this.setState({displayValue:'0',
+    operation:null}
+    )}
+  else {
+    this.setState({displayValue:'0'})
+  }
+  console.log(this.state)
+}
+handleEqualButton = () => {
+  console.log(this.state)
+  if(this.state.operation===null){
+    return
+  }
+  const{previousValue, operation, displayValue} = this.state
+  this.setState({displayValue:calculate(parseFloat(previousValue),operation,parseFloat(displayValue))+'',
+  previousValue:null,
+  operation:null
+  })
+}
+
+handleDotPressed = () => {
+  if(this.state.displayValue.indexOf('.') === -1){
+    this.setState({displayValue:this.state.displayValue+'.'})
+  }
+}
+
+handleInvertPressed = () => {
+  if(this.state.displayValue !== 0) {
+    this.setState({displayValue:invert(parseFloat(this.state.displayValue))+''})
+  }
+}
+
+handlePercentagePressed = () => {
+  if(this.state.displayValue !== 0) {
+  this.setState({displayValue:percentage(parseFloat(this.state.displayValue))+''})
+  }
+}
+
 handleNumsPressed = (value) => {
+  if(this.state.waitingForNewValue){
+    this.setState({
+      displayValue:value,
+      waitingForNewValue:false,
+    })
+    return
+  }
 
   let newState = ''
 
-  if(this.state.displayValue.charAt(0)!== '0'){
+  if(this.state.displayValue.charAt(0) !== '0' || this.state.displayValue.slice(0,2) === '0.'){
     newState = this.state.displayValue
-    
-  } 
-
+      
+  }
+   
   if(value === '0' && this.state.displayValue === '0'){
     this.setState({displayValue:value})
   }
   else if(this.state.displayValue === '0' || this.state.displayValue !== '0'){
-     newState = newState + value
-     console.log()
+    newState = newState + value
     this.setState({displayValue:newState})
   }
   else {
@@ -69,6 +131,7 @@ handleNumsPressed = (value) => {
 }
 
   render() {
+
     return (
       <div className="App">
           <div className='container calculator'>
@@ -76,9 +139,9 @@ handleNumsPressed = (value) => {
             <Display styles={''} currentElement={this.state.displayValue}/>
             </div>
             <div className='row'>
-              <Button styles={'col'} value={'AC'}/>
-              <Button styles={'col'}value={'%'}/>
-              <Button styles={'col'} value={'+/-'}/>
+              <Button handleButtonPressed={this.handleClearButton} styles={'col'} value={this.state.operation === null || this.state.previousValue ===null ? 'AC' : 'C'}/>
+              <Button handleButtonPressed={this.handlePercentagePressed} styles={'col'}value={'%'}/>
+              <Button handleButtonPressed={this.handleInvertPressed} styles={'col'} value={'+/-'}/>
               <Button handleButtonPressed={this.handleOperationsPressed} styles={'col orange'} value={'/'}/>
             </div>
             <div className='row'>
@@ -101,8 +164,8 @@ handleNumsPressed = (value) => {
             </div>
             <div className='row'>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col-6'} value={'0'}/>
-              <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'.'}/>
-              <Button styles={'col orange'} value={'='}/>
+              <Button handleButtonPressed={this.handleDotPressed} styles={'col'} value={'.'}/>
+              <Button handleButtonPressed={this.handleEqualButton} styles={'col orange'} value={'='}/>
               </div>
           </div>
       </div>

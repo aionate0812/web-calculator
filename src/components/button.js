@@ -3,7 +3,6 @@ import React from 'react';
 class Button extends React.Component {
 
     handleOnClick = (e) => {
-        
         this.props.handleButtonPressed(e.target.innerHTML)
     }
 

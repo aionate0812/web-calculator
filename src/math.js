@@ -18,10 +18,6 @@ const doMath = (a, operation, b) => {
         return multiplication(a, b);
     } else if (operation === "/") {
         return division(a, b);
-    } else if (operation === "%") {
-        return percentage(a);
-    } else if (operation === "+-") {
-        return invert(a);
     }
 }
 
@@ -46,13 +42,7 @@ const percentage = (num) => {
 }
 
 const invert = (num) => {
-    if (num > 0) {
-        return num * -1
-    } else if (num < 0) {
-        return num * -1;
-    } else {
-        return num;
-    }
+    return num * -1
 }
 
 
