@@ -78,27 +78,6 @@ handleClearButton = (value) => {
         })
         return
     }
-    // if(this.state.operation !== null) {
-    //   if(this.state.previousValue === this.state.displayValue) {
-    //     this.setState({
-    //       previousValue:this.state.displayValue,
-    //       operation:null
-    //       })
-    //     } else {
-    //       this.setState({
-    //         displayValue:'0'
-    //         })
-    //     } 
-    //   if(this.state.previousValue !== null) {
-    //     this.setState({
-    //       displayValue:'0'
-    //     }) 
-    //   } else{
-    //     this.setState({
-    //       operation:null
-    //     })
-    //   }
-    //}
   } else {
     this.setState({
       displayValue:'0',
@@ -168,9 +147,9 @@ handleNumsPressed = (value) => {
     return (
       <div className="App">
           <div className='container calculator'>
-            <div className={'row justify-content-end display'}>
-            <Display styles={''} currentElement={this.state.displayValue}/>
-            </div>
+           
+            <Display styles={'row justify-content-end display'} currentElement={this.state.displayValue}/>
+            
             <div className='row'>
               <Button handleButtonPressed={this.handleClearButton} styles={'col'} value={this.state.operation === null || this.state.previousValue ===null ? 'AC' : 'C'}/>
               <Button handleButtonPressed={this.handlePercentagePressed} styles={'col'}value={'%'}/>
