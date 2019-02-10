@@ -13,31 +13,27 @@ const doMath = (a, operation, b) => {
         return addition(a, b);
     } else if (operation === "-") {
         return subtraction(a, b);
-    } else if (operation === "*") {
+    } else if (operation === "x") {
         return multiplication(a, b);
-    } else if (operation === "/") {
+    } else if (operation === "÷") {
         return division(a, b);
-    } else if (operation === "%") {
-        return percentage(a);
-    } else if (operation === "+-") {
-        return invert(a);
     }
 }
 
 const addition = (num1, num2) => {
-    return num1 + num2;
+    return parseFloat(num1) + parseFloat(num2);
 }
 
 const subtraction = (num1, num2) => {
-    return num1 - num2;
+    return parseFloat(num1) - parseFloat(num2);
 }
 
 const multiplication = (num1, num2) => {
-    return num1 * num2;
+    return parseFloat(num1) * parseFloat(num2);
 }
 
 const division = (num1, num2) => {
-    return num1 / num2;
+    return parseFloat(num1) / parseFloat(num2);
 }
 
 const percentage = (num) => {
@@ -45,18 +41,9 @@ const percentage = (num) => {
 }
 
 const invert = (num) => {
-    if (num > 0) {
-        return num * -1
-    } else if (num < 0) {
-        return num * -1;
-    } else {
-        return num;
-    }
+    return num * -1
 }
 
-
-
-console.log(calculate(-6, "+-", null))
 
 
 export {

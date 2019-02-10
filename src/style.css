@@ -20,3 +20,16 @@ button {
     background-color: #EE9B3E;
     /* color: #fff; */
   }
+
+  .calculator {
+    margin-top:20px;
+    width:700px;
+    /* border:1px solid black; */
+  }
+
+  .display {
+    background-color: #333333;
+    color:white;
+    width:700px;
+    padding-right:20px;
+  }

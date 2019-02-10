@@ -1,12 +1,21 @@
 import React from 'react';
 
-const Button = (props) =>{
-return (
-    <React.Fragment>
-    <button className={props.styles}>{props.value}</button>
-    </React.Fragment>
+class Button extends React.Component {
 
-)
+    handleOnClick = (e) => {
+        this.props.handleButtonPressed(e.target.innerHTML)
+    }
+
+    render () {
+        return (
+            <React.Fragment>
+            <button onClick={this.handleOnClick} className={this.props.styles}>{this.props.value}</button>
+        </React.Fragment>
+        )
+    }
 }
+
+
+
 
 export default Button
