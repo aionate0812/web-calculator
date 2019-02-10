@@ -24,12 +24,14 @@ button {
   .calculator {
     margin-top:20px;
     width:700px;
-    /* border:1px solid black; */
+    border:1px solid black;
   }
 
   .display {
     background-color: #333333;
     color:white;
-    width:700px;
+    width:104.5%;
     padding-right:20px;
+    padding-top:10px;
+    padding-bottom:10px; 
   }
