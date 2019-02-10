@@ -59,16 +59,25 @@ handleOperationsPressed = (op) => {
 
 handleClearButton = (value) => {
   if(value === 'C') {
-    this.setState({
-      operation:null,
-      displayValue:'0'
-    })
-    // if(this.state.previousValue !== null) {
-    //   this.setState({
-    //     operation:null
-    //     })
-    //     return
-    // }
+    if(this.state.previousValue !== null && this.state.operation !== null) {
+      if(this.state.previousValue === this.state.displayValue) {
+        this.setState({
+          displayValue:'0'
+        })
+        return
+      }
+      this.setState({
+        displayValue:'0'
+        })
+        return
+    }
+    
+    if(this.state.previousValue !== null) {
+      this.setState({
+        operation:null
+        })
+        return
+    }
     // if(this.state.operation !== null) {
     //   if(this.state.previousValue === this.state.displayValue) {
     //     this.setState({
