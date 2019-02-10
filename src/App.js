@@ -3,7 +3,7 @@ import Display from './components/display'
 import Button from './components/button'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './style.css'
-import {calculate, doMath, addition, subtraction, multiplication, division, percentage, invert} from './math';
+import {calculate, percentage, invert} from './math';
 
 class App extends Component {
   constructor(props){
@@ -15,10 +15,9 @@ class App extends Component {
     waitingForNewValue: false
   }
 }
-//parseInt(this.state.displayValue)
 handleOperationsPressed = (op) => {
- 
-  if(this.state.waitingForNewValue){
+  let {displayValue, previousValue, operation, waitingForNewValue} = this.state;
+  if(waitingForNewValue){
     this.setState({
       operation:op,
       waitingForNewValue:true,
@@ -26,7 +25,6 @@ handleOperationsPressed = (op) => {
     return
   }
 
-  let {displayValue, previousValue, operation} = this.state;
   if(operation === null) {
     this.setState ({
       operation:op,
@@ -36,51 +34,81 @@ handleOperationsPressed = (op) => {
   }
   else {
     if(previousValue === null) {
-    const result = calculate(previousValue,
-      operation,
-      displayValue.indexOf('.') > -1 ? parseFloat(displayValue)
-      :parseInt(displayValue))
-    this.setState ({
-    displayValue: result+'',
-    waitingForNewValue:true,
-    })
+      const result = calculate(previousValue,
+        op,
+        displayValue
+      )
+      this.setState ({
+        displayValue: result+'',
+        waitingForNewValue:true,
+      })
     }
     else {
-    const result = calculate(previousValue.indexOf('.') > -1 ? parseFloat(previousValue)
-    :parseInt(previousValue),
-    operation,
-    displayValue.indexOf('.') > -1 ? parseFloat(displayValue)
-      :parseInt(displayValue))
-    this.setState ({
-      displayValue: result+'',
-      operation:op,
-      previousValue:result+'',
-      waitingForNewValue:true,
-    })
+      const result = calculate(previousValue,
+      op,
+      displayValue)
+      this.setState ({
+        displayValue: result+'',
+        operation:op,
+        previousValue:result+'',
+        waitingForNewValue:true,
+      })
     }
-   
   }
 }
 
 handleClearButton = (value) => {
   if(value === 'C') {
-    this.setState({displayValue:'0',
-    operation:null}
-    )}
-  else {
-    this.setState({displayValue:'0'})
+    this.setState({
+      operation:null,
+      displayValue:'0'
+    })
+    // if(this.state.previousValue !== null) {
+    //   this.setState({
+    //     operation:null
+    //     })
+    //     return
+    // }
+    // if(this.state.operation !== null) {
+    //   if(this.state.previousValue === this.state.displayValue) {
+    //     this.setState({
+    //       previousValue:this.state.displayValue,
+    //       operation:null
+    //       })
+    //     } else {
+    //       this.setState({
+    //         displayValue:'0'
+    //         })
+    //     } 
+    //   if(this.state.previousValue !== null) {
+    //     this.setState({
+    //       displayValue:'0'
+    //     }) 
+    //   } else{
+    //     this.setState({
+    //       operation:null
+    //     })
+    //   }
+    //}
+  } else {
+    this.setState({
+      displayValue:'0',
+      operation:null
+    })
   }
-  console.log(this.state)
 }
+
 handleEqualButton = () => {
-  console.log(this.state)
+  const{previousValue, operation, displayValue} = this.state
   if(this.state.operation===null){
     return
   }
-  const{previousValue, operation, displayValue} = this.state
-  this.setState({displayValue:calculate(parseFloat(previousValue),operation,parseFloat(displayValue))+'',
-  previousValue:null,
-  operation:null
+  this.setState({displayValue:calculate(previousValue,
+    operation,
+    displayValue)+'',
+    previousValue:null,
+    operation:null,
+    waitingForNewValue:false
   })
 }
 
@@ -110,14 +138,10 @@ handleNumsPressed = (value) => {
     })
     return
   }
-
   let newState = ''
-
   if(this.state.displayValue.charAt(0) !== '0' || this.state.displayValue.slice(0,2) === '0.'){
-    newState = this.state.displayValue
-      
-  }
-   
+    newState = this.state.displayValue    
+  } 
   if(value === '0' && this.state.displayValue === '0'){
     this.setState({displayValue:value})
   }
@@ -141,14 +165,14 @@ handleNumsPressed = (value) => {
             <div className='row'>
               <Button handleButtonPressed={this.handleClearButton} styles={'col'} value={this.state.operation === null || this.state.previousValue ===null ? 'AC' : 'C'}/>
               <Button handleButtonPressed={this.handlePercentagePressed} styles={'col'}value={'%'}/>
-              <Button handleButtonPressed={this.handleInvertPressed} styles={'col'} value={'+/-'}/>
-              <Button handleButtonPressed={this.handleOperationsPressed} styles={'col orange'} value={'/'}/>
+              <Button handleButtonPressed={this.handleInvertPressed} styles={'col'} value={'±'}/>
+              <Button handleButtonPressed={this.handleOperationsPressed} styles={'col orange'} value={'÷'}/>
             </div>
             <div className='row'>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'7'}/>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'8'}/>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'9'}/>
-              <Button handleButtonPressed={this.handleOperationsPressed} styles={'col orange'} value={'X'}/>
+              <Button handleButtonPressed={this.handleOperationsPressed} styles={'col orange'} value={'x'}/>
             </div>
             <div className='row'>
               <Button handleButtonPressed={this.handleNumsPressed} styles={'col'} value={'4'}/>
